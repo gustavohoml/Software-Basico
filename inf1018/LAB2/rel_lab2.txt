@@ -1,0 +1,36 @@
+============================================================
+RELATÓRIO - LAB 2
+============================================================
+# QUESTÃO 1
+Após a compilação e execução do programa obtive o seguinte
+resultado:
+0x7ffdc2081b6c - 10
+0x7ffdc2081b6d - 27
+0x7ffdc2081b6e - 00
+0x7ffdc2081b6f - 00
+onde o primeiro número representa o endereço de memória que
+aquele byte está organizado e em seguida a parte hexadecimal
+daquele byte. O resultado contém 4 linhas, mostrando que um
+inteiro tem 4 bytes.
+
+Após a alteração do tipo para long, obtive o mesmo resultado
+porém em 8 linhas, mostrando que um long tem 8 bytes.
+
+Para o short, o programa imprimiu 2 linhas mostrando que um
+short tem 2 bytes.
+
+Para o char apenas uma linha, mostrando que um char contem 1
+byte.
+
+
+
+# QUESTÃO 2
+A função string2num converte string para inteiro, ela cria uma
+variável inteira para armazenar o resultado e utiliza um "for" 
+para percorrer toda a string passada no argumento e para cada 
+caractere da string ela multiplica a variável por 10, ja que 
+ela quer na base 10, e soma a diferenca entre o codigo do caractere 
+e o codigo do caractere 0, ja que assim
+
+
+============================================================

@@ -1,0 +1,61 @@
+============================================================
+RELATÓRIO - LAB 1 - AQUECIMENTO
+============================================================
+# QUESTÃO 1 (fiz a junção das questões 1, 2, 3 e 4) 
+
+- Abri um codespace no github para simular o ambiente linux/gcc 
+e então abri esse codespace no VSCode. Usei o comando pwd para 
+saber o caminho e então o comando ls para saber os diretorios 
+existentes. Em seguida usei o comando mkdir para criar uma pasta 
+para a disciplina de Software Básico e criei um arquivo .c e 
+colei o codigo dado no enunciado da questão. Compilei o programa 
+com o comando gcc -Wall -o ex1 ex1.c e executei usando ./ex1 4.0 
+e então o programa leu o argumento e imprimiu o valor do argumento 
+mais um, já que é isso que a função faz. Ao tentar executar o 
+programa usando apenas ./ex1 o comando falhou, pois ele esperava 
+um argumento mas eu nao passei nenhum. Ao tentar executar usando 
+apenas ex1 o comando nao rodou pois ele nao achou nenhum comando 
+chamado ex1, pois para ele reconhecer o comando eu preciso usar 
+./ mais o nome do executável e em seguida vem os argumentos.
+
+- Dividi o meu programa em 2 arquivos criando um arquivo chamado 
+labaux.c contendo a função foo e no arquivo contendo apenas o 
+cabeçalho da função. Agora para compilar ambos precisamos traduzir 
+cada um e em seguida fazer a ligação deles ou utilizar um comando 
+que faz os dois, "gcc -Wall -o ex2 labaux.c ex2.c" no caso, testei 
+novamente o programa e ele funcionou da mesma forma. Apaguei o 
+cabeçalho da função e fiz o teste do programa novamente, após isso 
+o programa ate rodou mas nao corretamente, na hora de mostrar o 
+resultado(argumento + 1) ele mostrou zero, ele sabe que a função 
+existe mas sem o cabeçalho ele nao consegue entender o funcionamento 
+da função e acaba retornando 0. 
+
+
+# QUESTÃO 2 (questao 5) 
+
+- Criei um arquivo .c contendo a função dump que recebe um ponteiro 
+de qualquer tipo e um inteiro que dirá para a questão o tamanho desse 
+ponteiro, já que ele é um "ponteiro universal". Criei também outro 
+arquivo .c contendo a main. Fiz a compilação de ambos os arquivos e 
+executei, então o programa me retornou isso:
+
+    valor de c1: 1 -> na memória: 1 
+    valor de c2: 49 -> na memória: 49 
+    valor de i: 1 -> na memória: 1 0 0 0 
+    valor de v: 1 -> na memória: 49 0 
+
+Percebi que o programa mostra como a variável está organizada na 
+memória, conforme o tipo e conteúdo. Uma variável do tipo char 
+ocupa 1 byte na memória, c1 contém o codigo 1 que equivale a 
+algum caractere, já c2 contém o codigo do caractere '1' que é 49, 
+ja a variavel i contém o inteiro 1, e está organizada "1 0 0 0" 
+pois contém 4 bytes e está ao contrário, o certo seria "0 0 0 1" 
+mostrando que minha maquina é little endian já que nessas maquinas 
+o byte menos significativo vem primeiro. Já a variável v é uma 
+lista de caracteres, ou em outras palavras uma string, onde cada 
+caractere ocupa um espaço na string, nesse caso a string é o 
+numero 1 mais o caractere \0, mostrando que ocupa 2 bytes na 
+memória.
+
+
+============================================================
