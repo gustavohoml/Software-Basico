@@ -1,39 +1,27 @@
 #include <ctype.h>
 #include <stdio.h>
  
+int is_digit(char c) {
+    return (((c >= 'a') && (c <= 'z')) ? 1 : 0);
+}
+
 int string2num (char *s, int base) {
     int a = 0;
-    for (; *s; s++)
-        a = a*10 + (*s - '0');
-
-    if (base == 10)
-        return a;
-
-    if (base < 10) {
-        int result = 0;
-        int quociente = 0;
-        int i = 1;
-
-        do {
-            quociente = a / base;
-            result += ((a % base) * i);
-            a = quociente;
-            i = i * 10;
-        } while (a >= 1);
-
-        return result;
+    for (; *s; s++) {
+        //printf("%c \n", *s); // isso imprime o digito atual
+        //printf("%s \n", s); // isso imprime a string
+        if (is_digit(*s))
+            a = a*base + (*s - 'a');
+        else
+            a = a*base + (*s - '0');
     }
-
-
+    return a;
 }
 
 int main (void) {
-    //printf("%d\n", string2num("777", 10));
-    //printf("%d\n", string2num("777", 8));
-    //printf("%d\n", string2num("97", 8));
-    //printf("%d\n", string2num("12", 8));
-    //printf("%d\n", string2num("10", 2));
-    printf("%d\n", string2num("256", 16));
+    printf("%d\n", string2num("1a", 16));
+    printf("%d\n", string2num("a09b", 16));
+    printf("%d\n", string2num("z09b", 36));
 
     return 0;
 }

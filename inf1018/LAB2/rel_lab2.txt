@@ -35,6 +35,16 @@ qual número em que a string se refere. A cada vez que ele percorre a
 string ele move uma dezena do valor antigo e acrescenta a respectiva 
 unidade.
 
+Para fazer com que a função aceite qualquer base entre 2 e 10, será 
+necessário fazer apenas uma alteração, na formula "a = a*10 + (*s - '0')" 
+ele multiplica por 10 porque está considerando tudo na base decimal 
+então basta trocar o 10 por uma variável, que pode ser chamada "base", 
+dada como argumento da função. 
+
+A função do item anterior converte string de numeros na base dada para 
+inteiros decimais, no entanto essa base tem que ser algo entre 2 e 10. 
+Para que ela aceite outras bases seria necessário fazer com que ela 
+verifique se é digito e adicionar caso seja.
 
 
 
