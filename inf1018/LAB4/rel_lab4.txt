@@ -1,0 +1,20 @@
+============================================================
+RELATÓRIO - LAB 2 - EXERCICIOS EXTRA
+============================================================
+# QUESTÃO 1
+
+- A questão pede para analisar e calcular o tamanho de cada 
+variavel, para cada variável eu tratei ela como se fosse 
+sem sinal, fiz como seria ela em binario, inverti os bits 
+e somei um, e transformei em hexadecimal, apos isso apenas 
+completei os bytes restantes com "f" das variaveis com valores 
+negativos.
+
+# QUESTÃO 2
+
+
+
+
+
+
+============================================================

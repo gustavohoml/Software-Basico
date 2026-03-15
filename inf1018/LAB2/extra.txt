@@ -3,6 +3,14 @@ RELATÓRIO - LAB 2 - EXERCICIOS EXTRA
 ============================================================
 # QUESTÃO 1
 
+- Para criar uma função que verifique a organização de dados 
+na minha máquina(se é little-endian ou big-endian) basta que 
+na função eu crie uma variável int qualquer, no caso eu criei 
+uma variavel contendo o 1, e fiz um dump disso, pois se isso 
+tiver organizado "00 00 00 01" será big-endian, caso contrario 
+será little-endian.
+
+- 
 
 
 

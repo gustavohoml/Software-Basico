@@ -39,13 +39,37 @@ Para fazer com que a função aceite qualquer base entre 2 e 10, será
 necessário fazer apenas uma alteração, na formula "a = a*10 + (*s - '0')" 
 ele multiplica por 10 porque está considerando tudo na base decimal 
 então basta trocar o 10 por uma variável, que pode ser chamada "base", 
-dada como argumento da função. 
+dada como argumento da função. A função será a seguinte:
+
+    int string2num (char *s, int base) {
+            int a = 0;
+            for (; *s; s++) {
+                a = a*base + (*s - '0');
+            }
+            return a;
+        }
 
 A função do item anterior converte string de numeros na base dada para 
 inteiros decimais, no entanto essa base tem que ser algo entre 2 e 10. 
 Para que ela aceite outras bases seria necessário fazer com que ela 
-verifique se é digito e adicionar caso seja.
+verifique se é digito e adicionar caso seja e adicionar um "offset", 
+já que no caso dela for "a"(a primeiro letra), estará correspondendo 
+ao numero 10. A função ficará assim:
 
+    int is_digit(char c) {
+        return (((c >= 'a') && (c <= 'z')) ? 1 : 0);
+    }
+
+    int string2num (char *s, int base) {
+        int a = 0;
+        for (; *s; s++) {
+            if (is_digit(*s))
+                a = a*base + (*s - 'a' + 10);
+            else
+                a = a*base + (*s - '0');
+        }
+        return a;
+    }
 
 
 ============================================================

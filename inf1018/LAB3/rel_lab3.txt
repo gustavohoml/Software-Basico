@@ -1,0 +1,83 @@
+============================================================
+RELATÓRIO - LAB 3 - OPERAÇÕES BIT A BIT
+============================================================
+# QUESTÃO 1
+
+- A questão pede para manipular os bits de uma variável x 
+unsigned contendo o numero hexadecimal 87654321 e guardando 
+em outras duas variáveis auxiliares, y e z, x guarda esse 
+valor de forma que ele mantenha o byte menos significativo 
+de x e o resto fique 0, para isso eu desloquei os bits de 
+x 24 vezes para a esquerda e depois o mesmo valor para a 
+direita, ou seja 3 multiplicado por 8, já que 1 byte contem 
+8 bits e eu queria deslocar esse byte 3 vezes, isso ja deixaria 
+os outros bits zerados. Para a variável z ele pede que o byte 
+mais significativo fique em 1 e os outros mantenha o valor de 
+x, para isso eu usei o operador "ou exclusivo" com o número em 
+hexadecimal 78000000 já que o 7 e o 8 são "bitcamente falando" 
+o inverso um do outro e esse operador retorna 1 caso seja o 
+inverso, e o restante eu zerei pois isso so repetiria os outros 
+bytes.
+
+# QUESTÃO 2
+
+- Agora é pedido para que a gente crie a função odd_ones, onde 
+ela vai verificar se o numero dado contém uma quantidade impar 
+ou par de bits 1. Para isso iniciei criando uma varíavel chamada 
+verificaçao que guarda 1 ou 0, e então eu vou deslocar esse numero 
+dado 1 vez para a direita ate que esse numero seja todo zerado e 
+a cada uma dessas vezes eu vou verificar se a operação "x & 0x1",  
+resulta em 1, se sim significa que ele achou um bit 1 e inverte a 
+variável "verificação", após isso retorna "verificaçao". A função 
+se encontra a seguir:
+
+    int odd_ones(unsigned int x) {
+        int verificação = 0;
+        while (x != 0) {
+            if (x & 0x1)
+                verificação = !verificação;
+            x = x >> 1;
+        }
+        return verificação;
+    }
+
+# QUESTÃO 3
+
+- Agora no item A da questão ele pede para que a gente crie a 
+função switch byte que troca as duas metades de um byte. Para 
+isso criei uma variável auxiliar que armazena x deslocado 4 
+vezes para a esquerda, já que metade de um byte é 4 bits e 
+isso zera a outra metade, depois fiz x ser deslocado 4 vezes 
+para a direita seguindo a mesma logica, então eu usei o operador 
+"OU" para "somar" esses dois valores. Segue a função:
+
+    unsigned char switch_byte(unsigned char x) {
+        unsigned int aux = x << 4;
+        x = x >> 4;
+        x = x | aux;
+        return x;
+    }
+
+- No item B, a questão pede para criar a função rotate_left, 
+que segue a mesma lógica do deslocamento de bits porém de 
+forma cíclica(ou circular). Para isso, iniciei criando uma 
+variável inteira como contador iniciando em 0 e fiz um 
+loop ate que essa contagem chegue na quantidade n passada como 
+argumento, então criei uma variável auxiliar chamada valor que 
+armazena o bit mais significativo(fiz isso deslocando a varíavel 
+x 7 vezes para a direita), após isso "somei" as duas variaveis 
+usando o operador bit a bit "OR" e armazenei em x, daí retornei 
+x. Abaixo contém a função:
+
+    unsigned char rotate_left(unsigned char x, int n) {
+        int cont = 0;
+        while (cont < n) {
+            unsigned char valor = x >> 7;
+            x = x << 1;
+            x = x | valor;
+            cont++;
+        }
+        return x;
+    }
+
+============================================================

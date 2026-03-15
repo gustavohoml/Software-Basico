@@ -8,10 +8,8 @@ int is_digit(char c) {
 int string2num (char *s, int base) {
     int a = 0;
     for (; *s; s++) {
-        //printf("%c \n", *s); // isso imprime o digito atual
-        //printf("%s \n", s); // isso imprime a string
         if (is_digit(*s))
-            a = a*base + (*s - 'a');
+            a = a*base + (*s - 'a' + 10);
         else
             a = a*base + (*s - '0');
     }

@@ -1,35 +1,30 @@
 #include <stdio.h>
 
-void dump (void *p, int n) {
-  unsigned char *p1 = p;
-  while (n--) {
-    printf("%d ", *p1);
-    p1++;
-  }
+void num2string(char *s, int num, int base) {
+
 }
 
-void is_little(void) {
-    unsigned int i = 1;
-    int n = 4;
-    unsigned char *pi = &i;
-    
+int is_little(void) {
+  int c = 1;
+  unsigned char *p = (unsigned char *)&c;
 
-    while (n--) {
-        printf("%d ", *pi);
-        pi++;
-    }
+  if (*p == 1) 
+    return 1;
+  else 
+    return 0;
 }
 
 int main() {
-    is_little();
-    //switch (is_little()) {
+    // switch (is_little()) {
     //    case 1: 
-    //        printf("Maquina Little-Endian");    
+    //        printf("Maquina Little-Endian \n");    
     //        break;
     //    case 0:
-    //        printf("Maquina Big-Endian");    
+    //        printf("Maquina Big-Endian \n");    
     //        break;     
-    //}
+    // }
+    char *buffer[10];
+    num2string(buffer, 10, 10);
 
     return 0;
 }
