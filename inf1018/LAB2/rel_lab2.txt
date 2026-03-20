@@ -71,5 +71,70 @@ ao numero 10. A função ficará assim:
         return a;
     }
 
+============================================================
+EXERCICIOS EXTRA - LAB 2
+============================================================
+
+# QUESTÃO 1
+
+- A questão pede para criar a função is_little, que verifica 
+se o tipo de organização de memória da minha máquina é 
+big-endian ou little_endian e retorne 1 se for little-endian 
+e 0 caso contrario. Para isso, criei uma variavel int contendo 
+o número 1 e um ponteiro sem sinal para char que aponte para o 
+byte mais significativo dessa variável, se for 1 é porque está 
+organizado "01 00 00 00", ao contrário, então é little-endian, 
+caso contrario está organizado "00 00 00 01", ordem "correta", 
+então é big-endian e retorna 0.
+
+    int is_little(void) {
+        int c = 1;
+        unsigned char *p = (unsigned char *)&c;
+
+        return (*p == 1) ? 1 : 0;
+    }
+
+# QUESTÃO 2
+
+- Essa questão pede para que a gente crie a função num2string 
+que vai converter um numero  na base passada como argumento em 
+uma string. Para isso eu criei um array contendo os possíveis 
+simbolos da minha string(de 0 a 9 e de A a Z), depois tratei o 
+caso da base inválida, ser menor que 2 ou maior que 16, e depois 
+o caso do numero ser 0. Após isso eu usei a lógica das divisões 
+sucessivas para pegar cada digito atraves dos restos e então 
+fiz um "mapeamento" a partir do array que criei e armazenei 
+em uma variavel temporaria para me auxiliar, já que isso iria 
+guardar os digitos na ordem inversa, depois disso so inverti 
+a ordem e amazenei na string dada como argumento.
+
+    void num2string(char *s, int num, int base) {
+        char *digits = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        char temp[TAM_MAX];
+        int i = 0;
+
+        if (base < 2 || base > 36) {
+            s[0] = '\0'; // Base inválida
+            return;
+        }
+
+        if (num == 0) {
+            s[0] = '0';
+            s[1] = '\0';
+            return;
+        }
+
+        while (num > 0 && i < TAM_MAX - 1) {
+            temp[i++] = digits[num % base];
+            num /= base;
+        }
+        temp[i] = '\0';
+
+        // Inverter a string resultante
+        for (int j = 0; j < i; j++) {
+            s[j] = temp[i - j - 1];
+        }
+        s[i] = '\0';
+    }
 
 ============================================================

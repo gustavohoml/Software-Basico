@@ -1,6 +1,7 @@
 ============================================================
-RELATÓRIO - LAB 2 - EXERCICIOS EXTRA
+RELATÓRIO - LAB 4 - INTEIROS COM E SEM SINAL
 ============================================================
+
 # QUESTÃO 1
 
 - A questão pede para analisar e calcular o tamanho de cada 
@@ -12,8 +13,61 @@ negativos.
 
 # QUESTÃO 2
 
+- Nessa questão o objetivo é o mesmo da quastão anterior. Para 
+a variavel l eu usei o mesmo raciocinio e obtive a resposta 
+correta so que com a organizacao dos bytes invertidas, ja que 
+minha maquina é little endian. Ja para a variavel k, o processo 
+é mais simples, uma vez que ele nao precisa reservar espaco para 
+o sinal, por ser unsigned, basta pegar o valor e transformar para 
+hexadecimal direto.
 
+# QUESTÃO 3
 
+- Nessa questão, nosso objetivo é desenvolver a função xbyte, que 
+será passado como argumentos um numero unsigned em um numero signed, 
+mantendo o sinal, e o byte que ela quer extrair. Para isso basta 
+usar manipulação de bits, a ideia é que a gente jogue o byte desejado 
+para o topo(byte 3), para descartar a parte esquerda, armazenando esse 
+valor em uma variavel inteira para que quando executemos o proximo 
+passo (shift logico para a direita) ela conserve o sinal, e depois 
+jogue ele para o byte 0. Então nossa função fica: 
+
+    int xbyte (packed_t word, int bytenum) {
+        int result = word << ((3 - bytenum) * 8);
+
+        return (result >> 24);
+    }
+
+# QUESTÃO 4
+
+- Essa questão pede para que a gente analise as saídas dos 
+programas. No programa 1 ele pergunta se o inteiro -1 é menor do que 
+o inteiro 2 e o programa responde que sim, apos isso ele pede para 
+que no print a gente troque "%d" por "%u"(tratar como unsigned) e 
+no print fica como se fosse "4294967295(esse valor pois agora ele esta 
+desconsiderando o sinal do -1 então ele vai para o ultimo elemento 
+aceito nessa variavel, que é 2^32 - 1) menor que 2", mas ele continua 
+dizendo que é menor pois na comparação ele trata as duas como signed.
+
+- No programa 2, ele ja inicializa as variaveis como unsigned, mantendo 
+os mesmos valores e no print ele trata como signed, então fica "-1 é 
+menor do que 2? nao", numericamente está contraintuitivo, mas essa resposta 
+se dar pois na comparação ele compara como unsigned(na comparação a 
+pergunta é "4294967295 é menor que 2?") é aí sim a logica está correta.
+
+- Ja no programa 3 ele inicializa a primeira variavel como signed e a 
+segunda como unsigned e quando se compara essas duas variaveis ele promove 
+o signed para unsigned, então segue a logica do programa 2.
+
+# QUESTÃO 5
+
+- Essa questão pede para a gente explicar como se dar a mudança de uma variável 
+signed char para unsigned int, ele nomeou as variaveis como "sc" e "ui", respectivamente. 
+Ele atribuiu o valor -1 à variavel sc, que estará organizada na memoria assim: 
+"FF (1111 1111)", então ele atribui esse valor à variavel ui, que por ter por ter 4 
+bytes, fará a extensão de sinal onde ele preservará o bit de sinal e preencherá o restante 
+com esse bit, então ficará organizada assim: "FF FF FF FF (32 "uns")", logo por ela ser 
+unsigned (não considera o sinal) ela verá esse numero como 2^32 - 1, que é 4294967295.
 
 
 

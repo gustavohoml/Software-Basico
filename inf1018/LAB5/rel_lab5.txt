@@ -1,0 +1,26 @@
+============================================================
+RELATÓRIO - LAB 5 - REPRESENTAÇÃO DE ARRAYS E STRUCT
+============================================================
+
+# QUESTÃO 1
+
+- O programa declara duas variáveis, a variavel "a" que é uma 
+cadeia de vetores para short onde tem 2 vetores contendo 3 
+elementos cada, e a variavel "b" que é um vetor para int 
+contendo dois elementos. A variável "a" contém 12 bytes, ja 
+que tem 2 elementos e cada elemento contem outros 3 e cada um 
+com 2 bytes, logo 2 * 3 * 2 = 12 bytes. Ja a variavel "b" contem 
+8 bytes, ja que tem 2 elementos e cada um com 4 bytes, logo 
+2 * 4 = 8.
+
+# QUESTÃO 2
+
+
+
+
+
+
+
+
+
+============================================================
