@@ -15,6 +15,7 @@ void dump (void *p, int n) {
 }
 
 int main (void) {
+    printf ("tamanho: %ld\n", sizeof(x));
     printf ("x: \n");
     dump (&x, sizeof(x));
 

@@ -15,6 +15,73 @@ com 2 bytes, logo 2 * 3 * 2 = 12 bytes. Ja a variavel "b" contem
 
 # QUESTÃO 2
 
+- Agora a questão é a seguinte, precisamos analisar a saida do 
+programa e explicar o porquê do tamanho e dos buracos entre os 
+campos da struct. A estrutura é definida com dois ints e um short 
+logo, logicamente o tamanho era para ser 10, mas quando printamos 
+o sizeof ela retorna 12, isso se dá pois dados escalares de tamanho 
+igual a k bytes devem ser alocados em endereços múltiplos de k, ja 
+o "buraco" (padding), se da pois os ints devem ser armazenados em 
+endereços múltiplos de k, ou seja, se tem um int seria em multiplos 
+de 4, pois é assim que o computador ler, então caso nao esteja um 
+múltiplo de 4 o computador iria ter que fazer duas leituras para 
+um mesmo numero.
+
+# QUESTÃO 3
+
+- Agora a questão pede para que a gente calcule o tamanho de cada 
+struct.
+
+- A struct X1 contém um char, um int e um char logo o tamanho dela 
+será 12, ja que seu maior elemento interno tem 4 bytes, e sera 
+organizada da seguinte forma: "A1 00 00 00 B1 B2 B3 B4 C1 00 00 00".
+
+- A struct X2 contém um long e um char logo o tamanho será 16 e ela 
+estará organizada "A1 A2 A3 A4 A5 A6 A7 A8 B1 00 00 00 00 00 00 00".
+
+- A struct X3 contém um int seguidos de dois char, logo seu tamanho 
+será 8 e sua organização será "A1 A2 A3 A4 B1 C1 00 00". B1 não terá 
+padding, pois c1 nao precisa de alinhamento de memoria, porem c1 terá, 
+ja que seu proximo elemento será um int que tem que ficar em multiplo 
+de 4.
+
+- A struct X4 contém a struct X2 e um char, seu tamanho será 24 e sua 
+organização será "A1 A2 A3 A4 A5 A6 A7 A8 | B1 00 00 00 00 00 00 00 | 
+C1 00 00 00 00 00 00 00". B1 terá padding, ja que o proximo elemento 
+da struct X2 será um long, C1 também terá padding, uma vez que o proximo 
+elemento da struct será o long da struct X2, múltiplo de 8. Então, quanto 
+ao tamanho, terá os 16 da struct X2 mais 8 resultando 24.
+
+- A struct X5 contém 3 char, logo seu tamanho é 3 e estará organizada 
+assim: "A1 B1 C1". Não precisa padding pois o proximo elemento é char.
+
+- A struct X6 contém um short, um int, um array com 3 char e um short. 
+Seu tamanho será 16 e sua organização será: "A1 A2 00 00 | B1 B2 B3 
+B4 | C1 C2 C3 00 | D1 D2 00 00". A1 terá padding, ja que seu proximo 
+elemento é um int e precisa estar em um mútiplo de 4, B1 não terá padding 
+pois seu proximo elemento é char e nao precisa de alinhamento, C1 é um 
+array com 3 char e terá um padding por seu proximo elemento ser short, 
+o endereço precisa ser múltiplo de 2, D1 não precisaria mas isso faria 
+com que o tamanho fosse 14, e isso nao pode ser pois seu maior elemento 
+é um int, então seu tamanho precisa ser multiplo de 4, ou seja, seu 
+tamanho será 16 e D1 terá padding.
+
+- A union U1 contém um int e um array de char, em uma union seu tamanho 
+é dado pelo tamanho do maior elemento que há nela, o int tem 4 bytes e 
+o array 5 bytes, logo seu tamanho teria 5 bytes, mas se o proximo 
+elemento fosse um int, ele não iria estar em um endereço multiplo de 4 
+logo precisa-se de um alinhamento, ou "padding", para o proximo endereco
+multiplo de 4, que é 8, então seu tamanho é 8 bytes, estaria organizado 
+assim: "A1 A2 A3 A4 00 00 00 00" para o caso de um int, ou "B1 B2 B3 B4 
+B5 00 00 00" para o caso do array de char.
+
+- A union U2 contém um short e um array com 5 char, pelo tamanho do seu 
+maior elemento seria o array que contém 5 bytes, so que se o proximo 
+elemento for um short ele estaria na posicao 5, que nao é multiplo de 2 
+(ja que o short tem 2 bytes), entao teria um padding para a posicao 6, e 
+seu tamanho ao inves de ser 5 bytes, é 6. Sua organização seria a seguinte: 
+"A1 A2 00 00 00 00" para o short, ou "B1 B2 B3 B4 B5 00" para o array.
+
 
 
 
