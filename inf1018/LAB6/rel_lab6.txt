@@ -1,0 +1,77 @@
+============================================================
+RELATÓRIO - LAB 6 - ASSEMBLY OPERAÇÕES ARITMÉTICAS E LÓGICAS
+============================================================
+
+# QUESTÃO 1
+
+- Nessa questão, nosso objetivo é comparar o programa em c 
+com o codigo em assembly e tentar entender ele. No código em 
+C ele começa declarando um array global de int e para fazer 
+isso em assembly utiliza-se esse formato no inicio do codigo:
+
+    .data
+    [nome_da_variavel]: .[tipo] [valor1, valor2, ...]
+
+- Após isso ele começa a main, em assembly é feito da seguinte 
+forma: ".text" para indicar o codigo, depois ".globl main" para 
+declarar uma variavel global main, e inicia com o label "main:" 
+q contém a função principal. Então no codigo c ele cria as 
+variaveis "i" como um iterador para o for e o ponteiro "p" para 
+apontar pro array, isso em assembly ficaria:
+
+    movl $0, %ebx
+    movq $nums, %r12 
+
+  "mov[b w l q] $[origem], %[destino]", o sufixo de "mov" é com 
+base no tamanho dos operandos, podendo ser 64 32 16 8 bits, 
+respectivamente.
+
+- Para o loop for ele cria a label L1 e L2, onde a L1 vai conter 
+a comparação e o conteúdo do loop e L2 para sair do loop e dar 
+continuidade no codigo. No loop ele começa comparando para saber 
+se o iterador chegou no tamanho final do array (que é 4), e se 
+chegar sair do loop, assim: "cmpl %4, %ebx" para a comparação 
+"(ebx == 4)?", e em seguida "je L2", je é "jump if equal", ou 
+seja, ele vai pular para aquela label se a comparação for 
+verdadeira, caso nao seja ele nao faz nada e continua o loop. 
+Então ele adiciona 1 a ebx(iterador), adiciona 4 no ponteiro(ja 
+que por ser um array de int e int ter 4 bytes, cada elemento esta 
+em um endereço múltiplo de 4, então quando ele adiciona 4 no 
+ponteiro, ele esta fazendo o ponteiro apontar para o proximo 
+elemento) e pula para o inicio do loop (L1), com estes comandos:
+
+    addl $1, %ebx
+    addq $4, %r12
+    jmp L1
+
+- E então tem a label L2 que é so a finalização do codigo.
+
+
+# QUESTÃO 2
+
+- A questão pede para que a gente modifique a questão 1 para 
+que ao invés de imprimir os valores do array, ele imprima a 
+soma de seus valores. Para isso, eu declarei um registrador 
+r10d para guardar a soma, já que é um registrador de 32 bits e 
+um inteiro tem 32 bits, e no loop, ao invés de pegar o valor 
+do array e imprimir, eu adicionei o valor do array em r10d, 
+e aí então eu imprimi, adicionando os seguintes comandos no 
+codigo:
+
+    movl  $0, %r10d 
+    addl (%r12), %r10d
+    movq    $Sf, %rdi
+    movl    %r10d, %esi
+    movl    $0, %eax
+    call    printf   
+
+
+# QUESTÃO 3
+
+- A questão 
+
+
+
+
+
+============================================================
