@@ -1,15 +1,5 @@
-/*
-int nums[] = {10, -21, -30, 45};
-int main() {
-  int i, *p;
-  for (i = 0, p = nums; i != 4; i++, p++)
-    printf("%d\n", *p);
-  return 0;
-}
-*/
-
 .data
-nums:  .int  10, -21, -30, 45
+nums:  .byte  10, -21, -30, 45
 Sf:  .string "%d "    # string de formato para printf
 Sff:  .string "\n"    
 
@@ -33,17 +23,17 @@ L1:
   cmpl  $4, %ebx  /* if (ebx == 4) ? */
   je  L2          /* goto L2 */
 
-  movl  (%r12), %eax    /* eax = *r12 */
+  movsbl  (%r12), %esi   
 
 /*************************************************************/
-/* este trecho imprime o valor de %eax (estraga %eax)  */
+/* este trecho imprime o valor de %r10b (estraga %r10b)  */
   movq    $Sf, %rdi    /* primeiro parametro (ponteiro)*/
-  movl    %eax, %esi   /* segundo parametro  (inteiro) */
+  movb  $0, %al
   call  printf       /* chama a funcao da biblioteca */
 /*************************************************************/
 
   addl  $1, %ebx  /* ebx += 1; */
-  addq  $4, %r12  /* r12 += 4; */
+  addq  $1, %r12  /* r12 += 4; */
   jmp  L1         /* goto L1; */
 
 L2:  

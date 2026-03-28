@@ -12,7 +12,7 @@ int main() {
 
 .data
 nums:  .int  10, -21, -30, 45
-Sf:  .string "%d\n"    # string de formato para printf
+Sf:  .string "%d "    # string de formato para printf
 
 .text
 .globl  main

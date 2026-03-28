@@ -25,7 +25,7 @@ void selectionSort(int* v) {
 			if (v[pos] > v[j + 1]) 
 				pos = j + 1;
         }
-		int temp = v[i];
+		int temp = v[i]; 
 		v[i] = v[pos];
 		v[pos] = temp;
     }

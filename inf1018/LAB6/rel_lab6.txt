@@ -60,6 +60,7 @@ codigo:
 
     movl  $0, %r10d 
     addl (%r12), %r10d
+    
     movq    $Sf, %rdi
     movl    %r10d, %esi
     movl    $0, %eax
@@ -68,9 +69,65 @@ codigo:
 
 # QUESTÃO 3
 
-- A questão 
+- Nessa questão, nosso objetivo é alterar o codigo antigo para 
+que, ao inves de mostrar a soma dos numeros, imprima os numeros 
+que são pares. Para isso eu alterei o meu codigo em C para entender 
+a logica e facilitar na hora de codar em assembly, ficando assim: 
+
+    int nums[] = {10, -21, -30, 45};
+    int main() {
+        int i = 0; 
+        int *p = nums;
+        int resto = 0;
+        while (i != 4) {
+            resto = (*p << 31) >> 31;
+            if (resto == 0)
+                printf("%d\n", *p);
+            i += 1;
+            p += 1; 
+        }
+        return 0;
+    }
+
+- Então reciclei o codigo da questão anterior e apaguei a 
+variavel soma e criei um registrador ecx, registrador de 32 
+bits(equivalente a um inteiro), que iria receber o conteudo 
+de "p(%r12)":
+    
+    movl (%r12), %eax         
+    movl %eax, %ecx
+
+- Criei uma segunda variavel %eax como um backup, para nao 
+perder o valor do conteudo de r12 quando fazer as pperações. 
+Então usei o shift logico 31 vezes para a esquerda e depois 
+para a direita, para saber se o numero é par, ja que se fosse 
+par esse resultado era para ser 0, então fiz a comparação se 
+seria 0 e caso nao fosse ele pularia a parte de printar:
+
+    shl  $31, %ecx                                                
+    shr  $31, %ecx                                            
+    cmpl $0, %ecx
+    jne Continue
+
+- Em seguida, reciclei o print da questão 1 e fiz as devidas 
+alterações, ficando assim: 
+
+    movq  $Sf, %rdi   
+    movl  %eax, %esi  
+    movb  $0, %al  
+    call  printf 
 
 
+#  QUESTÃO 4
+
+- Agora o objetivo é modificar a o código da questão 1 para 
+que ao invés do array ser de inteiros, eles serem de char(byte). 
+Para isso, comecei alterando a declaração, em seguida alterei a 
+aritmética de ponteiros para que ao inves de pular 4 bytes, ele 
+pule apenas 1, e fiz a extensão de sinal usando o comando "movsbl  
+(%r12), %esi", com sufixo "sbl" ele ja faz a extensao de sinal, 
+significa "Move With Sign-Extension, Byte to Long", preservando 
+o sinal. Depois apenas imprimi o valor.
 
 
 

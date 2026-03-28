@@ -38,7 +38,7 @@ struct X6 {
 union U1 {
   int i;
   char c[5];
-} u1 = {0xa1a2a3a4}; 
+} u1 = {.c = {0xc1, 0xc2, 0xc3, 0xc4, 0xc5}}; 
 
 union U2 {
   short s;
@@ -54,9 +54,9 @@ void dump (void *p, int n) {
 }
 
 int main (void) {
-    printf ("tamanho: %ld\n", sizeof(u2));
+    printf ("tamanho: %ld\n", sizeof(u1));
     printf ("x: \n");
-    dump (&u2, sizeof(u2));
+    dump (&u1, sizeof(u1));
 
     return 0;
 }
