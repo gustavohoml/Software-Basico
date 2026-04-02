@@ -1,0 +1,62 @@
+============================================================
+RELATÓRIO - LAB 7 - TRADUÇÃO DE ESTRUTURAS DE CONTROLE
+============================================================
+
+# QUESTÃO 1
+
+- A questão pede para analisar o codigo em C e o codigo em 
+assembly e explicar a relação entre eles. O codigo em assemby 
+começa declarando as variaveis globais em .data, em seguida 
+vamos para a main e ai ja criamos um registrador, r12, para 
+apontar pro array, depois criamos parte do nosso loop(L1), e 
+ai ele compara para saber se chegou no ultimo caractere, '\0', 
+e se for ele encerra o loop pulando para a continuação do codigo 
+(L2), senão ele so continua e no final pula para o inicio do 
+loop (L1) fazendo a extensão de sinal com o movsbl para imprimir 
+esse valor, depois ele adiciona 1 em r12 para ele apontar para 
+o proximo elemento e pula para o inicio como foi dito.
+
+
+# QUESTÃO 2
+
+- Agora a questão pede para modificar o codigo da questão 1 
+para que ele não imprima os caracteres "{" e "}". Reciclei o 
+codigo da questão 1 e fiz a seguinte modificação: após ele 
+comparar se o ponteiro de r12 chegou no '\0' eu fiz ele comparar 
+se o caractere é 123, que é '{', e caso seja pular a parte de 
+imprimir, e depois comparar se o caractere é 125, '}', e  
+pulando a parte de imprimir caso seja. Para isso criei um label 
+"nao_printa" depois da parte de imprimir.
+
+
+# QUESTÃO 3
+
+Agora nosso objetivo é que o codigo em assembly imprima os 
+quadrados dos numeros de 1 a 10, sem usar variavel global. 
+Para isso, reciclei o codigo da questão anterior, e apaguei o 
+array global que havia nela, entao criei um registrador ebx 
+começando em 1, em seguida fiz a parte do loop, que compara se 
+chegou a 11 e caso tenha chegado sai do loop, caso contrario 
+move o valor de rbx para outro registrador eax, utilizo imull 
+para obter o quadrado dele(com o imul eu faço a multiplicação 
+dele por ele mesmo), e então imprimo, adiciono 1 em rbx e volto 
+para o inicio do loop.
+
+
+# QUESTÃO 4
+
+- Agora nosso objetivo é traduzir o programa em c dado para o 
+assembly. Para isso reciclei o codigo da questão anterior, 
+comecei adicionando uma variavel global contendo o array, na 
+main criei o registrador r12 que aponta para o array, o 
+registrador ebx que representa o iterador, e eax que contém a 
+soma. No label L1, o loop, eu verifico se o iterador chegou em 
+4, já que tem 4 numeros no array, e saio do loop caso tenha 
+chegado, caso nao tenha eu adiciono em eax o valor de r12, em 
+seguida adiciono 1 no iterador ebx e 4 para r12 avancar para 
+o proximo elemento. Em L2, eu printo o valor da soma e finalizo 
+o código.
+ 
+
+
+============================================================
