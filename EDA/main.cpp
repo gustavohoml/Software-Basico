@@ -1,18 +1,28 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
-#define arq_fila "entrada_fila.txt"
-#define arq_pilha "entrada_pilha.txt"
+// exit 0 = Sucesso
+// exit 1 = Erro ao alocar memoria 
+
+typedef struct treebin TreeBin;
+
+struct treebin {
+	int info;
+	TreeBin* dir;
+	TreeBin* esq;
+};
+
+TreeBin* cria_arv_bin(void) {
+	TreeBin* arv = (TreeBin*)malloc(sizeof(TreeBin));
+	if (arv == NULL) 
+		exit(1);
+	arv->dir = NULL;
+	arv->esq = NULL;
+	return arv;
+}
 
 int main(void) {
-	printf("Caractere:\n");
-	FILE* f = fopen("entrada_fila.txt", "r");
-	if (f != NULL) 
-		exit(1);
+	TreeBin* binarv = cria_arv_bin(); 
 
-	char carac;
-	fscanf(f, "%c", &carac);
-	printf("Caractere: %c\n", carac);
-
-	return 0; 
+	free(binarv);
+	return 0;
 }
