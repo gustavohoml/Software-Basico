@@ -1,0 +1,188 @@
+============================================================
+RELATÓRIO - LAB 10 - MAIS FUNÇÕES EM ASSEMBLY 
+============================================================
+
+# QUESTÃO 1
+
+A questão pede que a gente crie uma função em assembly que 
+some todos os valores de uma lista encadeada e retorne essa 
+soma. Para começar eu salvo rbp e rsp, entao crio um registrador 
+para armazenar a soma, vou usar eax pois vai ser ele que vou 
+retornar depois comparo NULL(0) com rdi para ver se eu ja percorri 
+a lista toda tenha percorrido retorno, caso contrario adiciono 
+o valor na soma e desloco  8 de rdi para rdi, 8 pois struct é 
+um int e um ponteiro, e ponteiro tem que ser armazenado em um 
+endereco multiplo de 8, então volto pro inicio do loop.
+
+    .text
+    .globl add
+    add:
+        /* PROLOGO */
+        pushq %rbp
+        movq %rsp, %rbp
+    
+        movl $0, %eax
+    
+    loop:
+        cmpq $0, %rdi
+        je fora
+    
+        addl (%rdi), %eax
+        movq 8(%rdi), %rdi
+    
+        jmp loop
+    
+    fora:
+        leave
+        ret
+
+
+# QUESTÃO 2 
+
+Agora a questão pede para a gente refazer a função da questão 
+1 so que usando recursão. Primeiro salvo rbp e rsp para elas 
+nao serem subescritas quando chamar a recursao, entao comparo 
+rdi com 0 para ver se chegou no final, caso tenha chegado movo 
+0 para eax e retorno, caso contrario vou para a parte da recursao 
+onde preparo os parametros da funcao novamente e chamo ela, 
+entao adiciono o valor dela no endereco de retorno em eax, ficando 
+assim: 
+
+    .text
+    .globl add
+    add:
+        /*  PROLOGO  */
+        pushq %rbp
+        movq %rsp, %rbp
+        pushq %rbx
+
+        cmpq $0, %rdi
+        jne recursao
+        movl $0, %eax
+        jmp fim
+
+    recursao:
+        movl (%rdi), %ebx
+        movq 8(%rdi), %rdi
+        call add
+
+        addl %ebx, %eax
+
+    fim:
+        popq %rbx
+        leave 
+        ret
+
+
+# QUESTÃO 3
+
+Agora a questão pede para que a gente crie uma função em assembly 
+que compare e altere o valor de um array de struct. Começo pegando 
+os valores passados como parametros e salvando em registradores 
+callee-saved que eu salvei no prologo do codigo, depois comparo 
+se o iterador chegou a zero, sinalizando fim do array e saindo do 
+loop, dentro do loop eu preparo os argumentos da função f que retorna 
+o maior, então chamo ela, depois eu pego o retorno dela e movo para 
+o deslocamento de 4 do array passado (4 pois eu estou colocando no 
+val_2 do elemento do array), depois eu adiciono 8 no ponteiro passado 
+como parametro (para acessar o proximo elemento), e subtraio 1 do iterador 
+(ja que o iterador esta percorrendo de tras para frente, ou seja, de n a 0), 
+em seguida pulo para o inicio do loop, fora do loop eu faço o pop dos 
+elementos que salvei e retorno. Ficando assim: 
+
+    .text
+    .globl boo
+    boo:
+        pushq %rbp
+        movq %rsp, %rbp
+        subq $32, %rsp 
+        pushq %rbx 
+        pushq %r12
+        pushq %r13
+
+        /*  boo(rdi, esi, edx)  */
+        movq %rdi, %rbx
+        movl %esi, %r12d
+        movl %edx, %r13d
+        /*  boo(rbx, r12d, r13d)  */
+
+    loop:
+        cmpl $0, %r12d
+        je fora
+
+        movl (%rbx), %edi
+        movl %r13d, %esi
+        call f
+
+        movl %eax, 4(%rbx) 
+
+        addq $8, %rbx
+        subl $1, %r12d
+        jmp loop
+
+    fora:
+        popq %r13
+        popq %r12
+        popq %rbx
+        leave
+        ret
+
+# QUESTÃO 4
+
+Agora a questão pede que a gente crie uma função em assembly 
+que preencha os valores de um vetor secundario onde todos os 
+elementos sao 2 a mais do que o vetor primario, ja existe uma 
+função que some o valor + 2, basta mandar o valor, ela soma e 
+retorna o resultado. Para isso comecei salvando o endereço da 
+pilha e preservando os valores dos registradores que vou usar. 
+Entao movi os tres parametros para os registradores calee-saved 
+e iniciei o iterador como 0, depois criei o label loop, onde 
+tinha a comparação do iterador com n, e quando ele for maior 
+ou igual sai do loop, caso contrario eu preparo o argumento de f, 
+passando o valor do array primario e o valor eu movo para o 
+registrador secundario, depois adiciono 4 em cada array para 
+eles irem para o proximo elemento e 1 no iterador, em seguida 
+volto pro inicio do loop. Finalizando a função eu retorno, 
+ficando assim: 
+
+    .text
+    .globl map2
+    map2:
+        pushq %rbp
+        movq %rsp, %rbp
+
+        subq $32, %rsp
+        movq %r12, -8(%rbp)
+        movq %rbx, -16(%rbp)
+        movl %r14d, -20(%rbp)
+        movl %r13d, -24(%rbp)
+
+        /* map2(rdi, rsi, edx) */
+        /* f(edi)              */
+
+        movq %rdi, %rbx
+        movq %rsi, %r12
+        movl %edx, %r13d
+
+        movl $0, %r14d
+
+    loop:
+        cmpl %r14d, %r13d
+        jle fora 
+
+        movl (%rbx), %edi
+        call f
+    
+        movl %eax, (%r12)
+
+        addq $4, %rbx
+        addq $4, %r12
+        addl $1, %r14d
+        jmp loop
+
+    fora:
+        leave
+        ret 
+
+
+============================================================

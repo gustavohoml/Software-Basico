@@ -14,15 +14,15 @@ int f(int i, int v) {
 }
 
 int main (void) {
-  struct X x[3] = {{1,0}, {2,0}, {3,0}};
+  struct X x[6] = {{1,0}, {2,0}, {3,0}, {4,0}, {5,0}, {6,0}};
   int i;
 
   printf("Antes: ");
-  for (i=0; i < 3; i++)
+  for (i=0; i < 6; i++)
     printf("{%d,%d} ",x[i].val1, x[i].val2);
-  boo(x,3,2);
+  boo(x,6,3);
   printf("\nDepois: ");
-  for (i=0; i < 3; i++)
+  for (i=0; i < 6; i++)
     printf("{%d,%d} ",x[i].val1, x[i].val2);
   printf("\n");
   return 0;

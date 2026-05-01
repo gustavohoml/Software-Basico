@@ -1,0 +1,28 @@
+============================================================
+RELATÓRIO - LAB 8 - CHAMADAS DE FUNÇÕES EM ASSEMBLY
+============================================================
+
+# QUESTAO 1
+
+A questão 1 pede para a gente implementar a função system, que 
+executa um comando no terminal, em assembly. Vi que a função 
+system espera uma string como parametro que será o comando a 
+ser executado, então declarei a string em .data, depois preparei 
+o parametro jogando em rdi e então chamei a função system.
+
+# QUESTÃO 2
+
+Agora a questão pede para a gente compilar um arquivo em c, 
+contendo a main, com um arquivo contendo a função, usada na 
+main, em assembly, depois verificar o resultado e traduzir tudo 
+para o assembly. Para isso eu copiei o codigo inicial dado na 
+questão e parti daí, comecei criando o iterador em rbx e jogando 
+o vetor em r12, depois implementei a parte do loop onde fiz a 
+comparação com 5 e para pular para fora do loop caso seja igual, 
+depois preparei o primeiro e segundo parametro da função filtro 
+e chamei ela, em seguida chamei a função printf para mostrar o 
+numero preparando os parametros necessarios adicionei 1 no iterador, 
+4 em r12, ja que é um vetor de int e pulei para o inicio do loop.
+
+
+============================================================

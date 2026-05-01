@@ -1,0 +1,71 @@
+============================================================
+RELATÓRIO - LAB 9 - FUNÇÕES: PARAM E REGISTRO DE ATIVAÇÃO
+============================================================
+
+# QUESTÃO 1
+
+Essa questão pede para que a gente traduza a função add para 
+assembly que retorna a soma de tres inteiros passados como 
+parametros. Para isso eu movi o valor de edi(primeiro parametro) 
+para eax, depois adicionei o valor de esi(segundo param) e de 
+edx(terceiro param), por ser uma soma a ordem nao altera o 
+resultado, apos isso retorno para a main.
+
+# QUESTÃO 2
+
+Agora precisamos traduzir a função fat que calcula o fatorial 
+de um numero usando recursão. Para isso comecei salvando o endereço 
+da pilha, ja que iria usar recursão, para nao perder dados, depois 
+comparei com zero que seria o caso base que retornaria um, e pularia 
+para a parte da recusão caso nao fosse, na recursao eu salvo o valor 
+do parametro, subtraio 1 e chamo a função fat novamente, e então 
+multiplico o valor de retorno com o valor do parametro salvo e 
+retorno.
+
+# QUESTÃO 3
+
+A questão pede para que a gente crie uma função em assembly para 
+alterar alguns valores de um array. Para isso comecei criando os 
+registradores que armazenam o iterador e a soma, depois iniciei um 
+label loop onde teria a comparação do iterador com o n passado para 
+a função, que representa o tamanho do vetor e se eles forem iguais 
+significa que chegou no final do vetor e pula para fora do loop. 
+Nesse loop, ele adiciona o valor do elemento atual na soma, que 
+será usada para alterar o valor do array caso ele seja 0, entao 
+comparo o elemento com 0, se for 0 eu troco pelo valor da soma e 
+zero a soma, se nao eu so continuo o loop
+
+    .text
+    .globl foo
+    foo:
+        /* PROLOGO */
+        pushq %rbp            
+        movq  %rsp, %rbp      
+        subq  $16, %rsp       
+        movq  %rbx, -8(%rbp)  
+        movq  %r12, -16(%rbp) 
+
+        movl $0, %ebx        /* int i = 0 */
+        movl $0, %ecx        /* int s = 0 */
+
+    loop:
+        cmpl %ebx, %esi
+        je fora
+
+        addl (%rdi), %ecx
+        cmpl $0, (%rdi)
+        jne else
+
+        movl %ecx, (%rdi)
+        movl $0, %ecx
+
+    else:
+        addl $1, %ebx
+        addq $4, %rdi
+        jmp loop
+
+    fora:
+        leave
+        ret
+
+============================================================
