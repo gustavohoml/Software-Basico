@@ -1,0 +1,86 @@
+============================================================
+RELATÓRIO - LAB 11 - VARIAVEIS LOCAIS 
+============================================================
+
+# QUESTÃO 1
+
+Agora a questão pede que a gente crie uma função em assembly 
+que solicita um numero ao usuario e retorna esse numero. Para 
+isso eu inicio adicionando as strings "numero: " e "%d" como 
+S1 e S2 respectivamente e salvando a pilha na memoria, depois 
+eu preparo o argumento do printf com a S1 e chamo ela, então 
+eu preparo os da função scanf mandando a S2 para rdi e utilizando 
+o comando leaq para passar o endereço da variavel para rsi. 
+Então movo a variavel alterada para eax e retorno, ficando 
+assim: 
+
+    .data
+    S1: .string "numero: "
+    S2: .string "%d"
+
+    .text
+    .globl novonum
+    novonum: 
+        pushq %rbp
+        movq %rsp, %rbp
+        subq $16, %rsp
+
+        movq $S1, %rdi
+        call printf
+
+        movq $S2, %rdi
+        leaq -4(%rbp), %rsi
+        call scanf
+
+        movl -4(%rbp), %eax
+
+        leave
+        ret
+
+# QUESTÃO 2
+
+Agora a questão pede para criar uma função em assembly que 
+crie um vetor de tamanho 4 e preencha esse vetor com o numero 
+passado como parametro, em seguida retorne a soma de todos os 
+elementos do vetor. Para isso comecei criando uma variavel 
+global que armazena o tamanho, ou seja, 4. Então salvei a pilha 
+na memoria, separei o espaço do array local e deixei um registrador 
+para o iterador, no loop eu comparo o iterador com a variavel 
+global e pulo fora caso seja igual, entao movo o valor passado 
+como argumento para o elemento atual variavel local, adiciono 
+um no iterador, quatro na variavel de int e pulo para o inicio 
+do loop, então preparo os argumentos da função addl, chamo, dou 
+o leave e o ret. Ficando assim: 
+
+    .data
+    qt: .int 4
+
+    .text
+    .globl bemboba
+    bemboba:    
+        pushq %rbp
+        movq %rsp, %rbp
+        subq $16, %rsp
+        leaq -16(%rbp), %r9
+        /*  -16(%rbp) = local    */
+
+        movl $0, %ecx  /* i = 0 */
+
+    loop:
+        cmpl qt, %ecx
+        jge fora
+
+        movl %edi, (%r9)
+
+        addq $4, %r9
+        addl $1, %ecx
+        jmp loop
+
+    fora:
+        leaq -16(%rbp), %rdi
+        movl qt, %esi
+        call addl
+        leave
+        ret
+
+============================================================
