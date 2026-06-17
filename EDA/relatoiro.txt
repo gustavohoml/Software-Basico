@@ -1,0 +1,134 @@
+=============================================================================
+RELATORIO EDA - TRABALHO DE GRAFOS
+=============================================================================
+
+# QUESTAO 1
+
+Para isso o mapa do edifício foi construído utilizando listas de adjacência 
+para um grafo não direcionado (já que a função adicionaAresta insere conexões 
+nos dois sentidos). Dessa forma, a representação estrutural em memória fica 
+assim: 
+    [Laboratório 1] -> Corredor A; 
+    [Corredor A] -> Recepção -> Laboratório 2 -> Laboratório 1; 
+    [Laboratório 2] -> Corredor A; 
+    [Recepção] -> Auditório -> Corredor A; 
+    [Auditório] -> Corredor B -> Recepção; 
+    [Corredor B] -> Escada -> Auditório; 
+    [Escada] -> Saída de Emergência -> Corredor B;  
+    [Saída de Emergência] -> Escada
+
+
+# QUESTAO 2.A
+
+Ao executar a Busca em Profundidade (DFS) definida no código a partir da Recepção 
+(vértice 3), a ordem dos ambientes alcançados e impressos é determinada pela 
+inserção no início da lista encadeada, resultando em: Recepção, Auditório, Corredor 
+B, Escada, Saída de Emergência, Corredor A, Laboratório 2 e, por fim, Laboratório 1.
+
+
+# QUESTAO 2.B
+
+Nenhum ambiente é visitado mais de uma vez durante a execução porque o algoritmo 
+DFS implementado utiliza um vetor de controle chamado visi, que marca a posição 
+correspondente a cada vértice com o valor 1 (verdadeiro) assim que ele é acessado, 
+impedindo que os laços de repetição e chamadas recursivas processem ambientes que 
+já estão devidamente marcados.
+
+
+# QUESTAO 2.C
+
+A complexidade da Busca em Profundidade (DFS) neste código, por ser baseada 
+em uma implementação de lista de adjacência, é de O(V + E) no pior caso, em 
+que V representa o número total de vértices e E o número total de arestas do 
+grafo, uma vez que o algoritmo visita cada nó e percorre a lista de vizinhos 
+de cada um exatamente uma vez.
+
+
+# QUESTAO 3.A.I
+
+Executando a função buscaCamiMini, que aplica a Busca em Largura (BFS), o menor 
+trajeto mapeado a partir do Laboratório 1 (vértice 0) até a Saída de Emergência 
+(vértice 7) é a sequência: 
+Laboratório 1 -> Corredor A -> Recepção -> Auditório -> Corredor B -> Escada -> 
+Saída de Emergência.
+
+
+# QUESTAO 3.A.II
+
+Da mesma forma, utilizando o algoritmo BFS no código, o caminho mínimo percorrido 
+desde o Laboratório 2 (vértice 2) até a Saída de Emergência (vértice 7) converge 
+rapidamente para a rota principal e segue por: 
+Laboratório 2 -> Corredor A -> Recepção -> Auditório -> Corredor B -> Escada -> 
+Saída de Emergência.
+
+
+# QUESTAO 3.B
+
+Contando as transições entre os vértices listados na rota de ambos os laboratórios 
+até o destino final, observamos que o fluxo passa por um total de 7 ambientes, o 
+que exige exatamente 6 deslocamentos (ou seja, percorrer 6 arestas) ao longo do grafo 
+para completar a evacuação com sucesso.
+
+
+# QUESTAO 3.C
+
+A Busca em Largura (BFS) é a ferramenta adequada para identificar caminhos mínimos 
+em grafos não ponderados pois ela opera irradiando a pesquisa em "camadas" radiais, 
+garantindo categoricamente que a primeira vez que atinge o nó de destino (neste caso, 
+a saída de emergência), o percurso utilizado terá a menor quantidade de arestas 
+possível em relação à origem.
+
+
+# QUESTAO 3.D
+
+A DFS não encontraria necessariamente o mesmo caminho mínimo, pois o objetivo inerente 
+da DFS é avançar o mais fundo possível ao longo de uma ramificação antes de considerar 
+opções mais curtas adjacentes; caso houvesse múltiplas rotas viáveis, a DFS poderia 
+acidentalmente encontrar e retornar um caminho de evacuação longo e subótimo antes de 
+avaliar a rota mais eficiente.
+
+
+# QUESTAO 4.A
+
+Com a remoção da conexão vital entre "Auditório" e "Corredor B" causada pelo bloqueio 
+do incêndio simulado, não existirá mais nenhum caminho viável ligando a Recepção à Saída 
+de Emergência, tornando a evacuação por essa rota impossível.
+
+
+# QUESTAO 4.B
+
+A interrupção estrutural gerou duas zonas isoladas entre si: a zona frontal bloqueada, 
+que enclausura os ambientes Auditório, Recepção, Corredor A, Laboratório 1 e Laboratório 
+2; e a zona segura na parte traseira, contendo os ambientes Corredor B, Escada e a própria 
+Saída de Emergência.
+
+
+# QUESTAO 4.C
+
+Executando virtualmente a sua DFS neste novo cenário rompido, iniciando mais uma vez na 
+Recepção, os únicos ambientes que constariam como alcançados na saída padrão do algoritmo 
+seriam: Recepção, Auditório, Corredor A, Laboratório 2 e Laboratório 1, onde a busca se 
+encerraria devido à falta de opções de caminhos não visitados.
+
+
+# QUESTAO 4.D
+
+O conceito de componente conexa em teoria dos grafos descreve um subconjunto de vértices 
+onde todos estão conectados entre si por pelo menos um caminho válido, indicando que a 
+partir de qualquer ponto dentro dessa componente, pode-se navegar e alcançar qualquer 
+outro ponto pertencente exclusivamente ao mesmo agrupamento.
+
+
+# QUESTAO 4.E
+
+Após o isolamento da aresta que ligava o Auditório ao Corredor B, o prédio deixou de ser 
+um grafo totalmente unificado (uma única componente) e se dividiu, resultando na existência 
+de exatamente 2 componentes conexas separadas pela impossibilidade de trânsito.
+
+
+
+
+OBS.: Estava com um pouco de dúvidas então pedi ajuda para amigos e IA, por isso o código parecido
+
+
+=============================================================================

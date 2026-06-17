@@ -1,0 +1,33 @@
+============================================================
+RELATÓRIO - LAB 14 - REPRESENTACAO DE NUMEROS FLOAT  
+============================================================
+
+# QUESTÃO 1
+
+A questão pede para criar uma funcao em c que recebe um valor 
+float e retorne esse valor vezes 2, sem usar operacoes de float. 
+Para isso, eu extrai todos os bits desse numero separando cada 
+parte (sig, exp e frac) ja que o numero é escrito M 2^E e a 
+M é frac sem o bit mais significativo e E é exp - 127. Então, 
+seguindo essa lógica eu somei 1 ao exp e reconstrui o float.
+
+
+# QUESTÃO 2
+
+Agora o objetivo é criar uma funcao em c que converta um int 
+para um float. Para isso a gente trata logo o caso base, que 
+é caso o numero seja 0, entao ja retorna 0. Caso nao seja, 
+crio a variavel do sinal e ja inicializo com ela positiva, ou 
+seja, 0, e meu "i" absoluto que é o numero sem o sinal, e para 
+isso eu verifico se o numero é menor que zero, se for eu troco 
+o sinal para 1, indicando que é negativo e atualizo o valor do 
+i absoluto para "-1". Então vou contruir a parte do exp, para 
+isso eu crio uma variavel temporaria para armazenar o meu i 
+absoluto, o objetivo dessa variavel é para calcular o deslocamento 
+da virgula e esse sera meu E, e construo o exp que sera 127 + 
+E. Entao vou para a parte da frac, removo o bit mais significativo 
+usando operacoes bitwise, depois eu alinho ele para a posicao 
+correta e construo o float
+
+
+============================================================  

@@ -1,0 +1,66 @@
+============================================================
+RELATÓRIO - LAB 15 - INSTRUÇÕES DE PONTO FLUTUANTE
+============================================================
+
+# QUESTÃO 1
+
+A questão pede para traduzir a função foo, que recebe um double 
+'a' e um float 'b', e retorna (a+b)*(a-b) como float. Como os 
+tipos são diferentes, a primeira coisa que fiz foi converter o 
+'b' de float para double usando a instrução cvtss2sd. Depois, 
+copiei o valor de 'a' para um registrador temporário (%xmm2) 
+para não perder o valor original. Com isso, fiz a adição (addsd) 
+no registrador temporário e a subtração (subsd) no %xmm0. Em 
+seguida, multipliquei os dois resultados com mulsd. Como a função 
+exige que o retorno seja um float, no final eu peguei esse resultado 
+em double e converti de volta para float usando cvtsd2ss no %xmm0 
+antes de dar o ret.
+
+
+# QUESTÃO 2
+
+Aqui o objetivo é traduzir a função foo1, que retorna sin(a) 
++ b. O ponto crítico dessa questão é que sin é uma chamada de 
+função, o que significa que ela pode sobrescrever os registradores 
+temporários (caller-saved), como o %xmm1 onde o 'b' está guardado. 
+Para resolver isso, eu criei espaço na pilha e salvei o valor 
+de 'b' lá antes de chamar a função. O 'a' já estava no %xmm0 
+pronto para o call sin. Quando a função do seno retorna, o 
+resultado vem no próprio %xmm0. Então, eu simplesmente somei o 
+resultado do seno com o valor de 'b' que eu fui buscar na pilha 
+(-4(%rbp)) usando addss, desfiz a pilha com leave e retornei.
+
+QUESTÃO 3
+Para a função foo2, a lógica é calcular sin(a) + cos(b) recebendo 
+dois floats e retornando um double. Primeiro, converti tanto 
+'a' quanto 'b' para double usando cvtss2sd. Como temos duas 
+chamadas de função seguidas, o controle da pilha é essencial. 
+Salvei o 'b' (já convertido) na pilha e chamei o sin(a). O 
+resultado do seno vai para o %xmm0, mas eu preciso desse mesmo 
+registrador para passar o 'b' como argumento para o cosseno. 
+Então, peguei o resultado do seno e guardei na pilha também. 
+Depois, resgatei o 'b' da pilha, coloquei no %xmm0 e chamei 
+o cos. Por fim, peguei o resultado do cosseno (no %xmm0) e 
+somei com o resultado do seno salvo na pilha usando addsd.
+
+
+# QUESTÃO 4
+
+Nessa questão, a função foo3 recebe um ponteiro para double e 
+um int de tamanho, e faz um laço para somar os senos do array. 
+Como o laço faz várias chamadas à função sin (que apagaria 
+nossos registradores temporários), eu optei por proteger o 
+ponteiro 'a', o iterador 'i' e o tamanho 'n' em registradores 
+callee-saved (%rbx, %r12, %r13), empilhando eles no início. 
+Abri espaço na pilha para a variável 'r' e inicializei com 0.0 
+usando pxor. Dentro do laço, eu comparo 'i' com 'n'. Se a 
+condição passar, carrego o valor apontado por 'a' no %xmm0, 
+chamo o sin e somo o retorno com o 'r' guardado na pilha. 
+Depois, avanço o ponteiro 'a' somando 8 (pois um double tem 
+8 bytes) e incremento o 'i'. Quando o laço termina, movo o 
+valor final de 'r' da pilha para o %xmm0, restauro os callee-
+saved na ordem inversa com popq e encerro a função.
+
+
+
+============================================================
